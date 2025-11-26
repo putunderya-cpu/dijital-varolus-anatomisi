@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijital Varoluşun Anatomisi | Felsefi Analiz</title>
+    <style>
+        /* --- CSS STİLLERİ --- */
+        :root {
+            --text-color: #f0f0f0;
+            --accent-color: #00d4ff; /* Siber-mavi vurgu rengi */
+            --card-bg: rgba(40, 44, 52, 0.95); 
+            --font-main: 'Georgia', serif;
+            --secondary-text: #bbbbbb;
+            --story-color: #dddddd;
+        }
+
+        body {
+            background-image: url('Main Background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.6); 
+            color: var(--text-color);
+            font-family: var(--font-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+            /* Arka plan geçişini daha yumuşak yaptık (0.8s) */
+            transition: background-image 0.8s ease-in-out;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            max-width: 750px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            opacity: 1; 
+            margin: 30px 0;
+        }
+
+        h1 { font-size: 2.4rem; margin-bottom: 0.5rem; letter-spacing: 1.5px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); color: var(--accent-color); }
+        .subtitle { color: var(--secondary-text); font-style: italic; margin-bottom: 2.5rem; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        p { font-size: 1.15rem; margin-bottom: 1.5rem; }
+        
+        .btn { 
+            background-color: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            color: var(--text-color); 
+            padding: 12px 18px; 
+            cursor: pointer; 
+            font-family: var(--font-main); 
+            font-size: 1rem; 
+            transition: all 0.3s ease; 
+            margin: 8px 0; 
+            border-radius: 8px; 
+            text-align: left;
+            width: 100%;
+        }
+        .btn:hover { background-color: var(--accent-color); color: #111; border-color: var(--accent-color); transform: translateX(5px); }
+        
+        /* Başlangıç ve Reset butonları için ortak stil */
+        .btn-action { 
+            margin-top: 30px; 
+            padding: 15px 40px; 
+            font-size: 1.3rem; 
+            background-color: var(--accent-color); 
+            color: #111; 
+            border: none; 
+            text-align: center; 
+            font-weight: bold; 
+            box-shadow: 0 5px 15px rgba(0,212,255,0.3); 
+            width: auto; /* Genişliği içeriğe göre ayarla */
+            display: inline-block;
+        }
+        .btn-action:hover { background-color: #fff; transform: translateY(-3px); }
+
+        #quiz-container, #result-container {
+            display: none;
+            opacity: 0; 
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.8rem;
+            font-style: italic;
+            color: var(--story-color);
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.3);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .question-text { 
+            font-size: 1.25rem; 
+            margin-bottom: 1.5rem; 
+            font-weight: bold; 
+            line-height: 1.4; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-align: left;
+            color: #fff;
+        }
+        
+        .concept-tag { background-color: rgba(0,212,255,0.2); color: var(--accent-color); padding: 5px 12px; font-size: 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; font-weight: bold; border: 1px solid var(--accent-color); }
+        .result-title { font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-color); text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+        .score-bar { height: 15px; background: rgba(0,0,0,0.6); border-radius: 10px; margin: 30px 0; overflow: hidden; position: relative; border: 1px solid #555; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
+        .score-fill { height: 100%; background: linear-gradient(90deg, var(--accent-color), #ffffff); width: 0%; transition: width 1.2s ease-in-out; }
+        .result-desc { text-align: left; margin-top: 30px; font-size: 1.05rem; background: rgba(0,0,0,0.4); padding: 25px; border-left: 5px solid var(--accent-color); line-height: 1.8; border-radius: 8px; }
+        .quote { margin-top: 30px; font-style: italic; color: var(--secondary-text); font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; line-height: 1.5; }
+
+        .fade-in { animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container fade-in" id="welcome-screen">
+        <h1>Dijital Varoluşun Anatomisi</h1>
+        <div class="subtitle">Heidegger, Sartre ve Nietzsche ile Bir Vaka İncelemesi</div>
+        <p>
+            Bu araç, modern "Homo Digitalis"in davranış kalıplarını, 20. yüzyılın üç büyük varoluşçu filozofunun merceğinden analiz eder.
+        </p>
+        <p>
+            Kişi, sürünün bir parçası olan "Son İnsan"a mı dönüştü, "Kötü Niyet"le bir rol mü oynuyor, yoksa "Otantik" bir duruş mu sergiliyor?
+        </p>
+        <button class="btn btn-action" onclick="startQuiz()">Vakayı Masaya Yatır</button>
+    </div>
+
+    <div class="container" id="quiz-container">
+        <div class="concept-tag" id="concept-display">Kavram</div>
+        <div class="story-text" id="question-story">Hikaye buraya gelecek...</div>
+        <div class="question-text" id="question-text">Soru buraya gelecek...</div>
+        <div id="options-container">
+            </div>
+        <div style="margin-top: 25px; font-size: 0.9rem; color: var(--secondary-text);">
+            Senaryo: <span id="q-current">1</span> / <span id="q-total">10</span>
+        </div>
+    </div>
+
+    <div class="container" id="result-container">
+        <h1>Vaka Analiz Raporu</h1>
+        <h2 class="result-title" id="result-header">Başlık</h2>
+        
+        <div class="score-bar">
+            <div class="score-fill" id="score-fill"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--secondary-text); font-weight: bold;">
+            <span>Nesneleşme & Sürü (Das Man)</span>
+            <span>Otantiklik & Egemenlik (Übermensch)</span>
+        </div>
+
+        <div class="result-desc" id="result-desc">
+            Açıklama...
+        </div>
+
+        <div class="quote" id="result-quote"></div>
+        
+        <button class="btn btn-action" onclick="resetQuiz()">Yeni Vaka Analizi</button>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT KISMI ---
+        // 10 SORULUK BİRLEŞTİRİLMİŞ HAVUZ (Heidegger + Sartre + Nietzsche)
+        // [Sorular ve işlevler tamamen aynı, sadece yerleşim düzenlendi]
+        const questions = [
+            {
+                concept: "Düşkünlük / Son İnsan / Kötü Niyet",
+                story: "Gece geç saat. Homo Digitalis, sadece 'bir mesajı kontrol etmek' için telefonunu eline aldı. Bir saat sonra kendini, hiç ilgisini çekmeyen konularda rastgele kısa videolar izlerken, Nietzsche'nin tabiriyle 'göz kırparken' buldu.",
+                text: "Bu 'kaydırma' (scrolling) seansı nasıl sona erer?",
+                options: [
+                    { text: "Ancak fiziksel olarak yorgun düşüp telefonu elinden düşürdüğünde. (Tam Düşkünlük)", score: 0 },
+                    { text: "İçinden 'sadece bir video daha' diyerek süreyi sürekli uzatır, sonunda dış bir etkenle bırakır.", score: 3 },
+                    { text: "Bir süre sonra durumun anlamsızlığının farkına varır, varoluşsal bir sıkıntı (Bulantı) hisseder ve kapatır.", score: 5 },
+                    { text: "Belirli bir süre sonra iradesini kullanarak zorla da olsa bırakır.", score: 8 },
+                    { text: "Önceden belirlediği 15 dakikalık süre dolunca tereddütsüz bırakır. (Kararlılık)", score: 10 }
+                ]
+            },
+            {
+                concept: "Gerede / Sürü İçgüdüsü",
+                story: "Sosyal medyada, doğruluğu kanıtlanmamış ama çok popüler ve kutuplaştırıcı bir iddia hızla yayılıyor. Herkes bu konu hakkında öfkeli yorumlar yapıyor.",
+                text: "Homo Digitalis bu durumda ne yapar?",
+                options: [
+                    { text: "Sürüye dahil olmak ve onaylanmak için hemen öfkeli bir yorumla katılır veya RT eder.", score: 0 },
+                    { text: "Kendi önyargılarına uygunsa, doğruluğunu sorgulamadan beğenir (Homofili).", score: 3 },
+                    { text: "Yorumları okur, etkilenir ama pazar yerinin sineklerine karışmaya çekinir.", score: 5 },
+                    { text: "Hızlıca bir doğrulama yapmaya çalışır; bulamazsa şüpheyle yaklaşır ve paylaşmaz.", score: 8 },
+                    { text: "Kaynağı belirsiz 'söz' (Gerede) olduğu için tamamen sessiz kalır ve yayılmasına katkıda bulunmaz.", score: 10 }
+                ]
+            },
+            {
+                concept: "Dijital Bakış / Gönüllü Nesneleşme",
+                story: "Homo Digitalis aynada kendine bakıyor. Aklına bu görüntüyü sosyal medyada paylaşmak geliyor. O andan itibaren, Sartre'ın dediği gibi, artık kendine kendi gözleriyle değil, potansiyel izleyicinin (Başkası'nın) gözüyle bakmaya başlıyor.",
+                text: "Fotoğrafı çekerken ana motivasyonu nedir?",
+                options: [
+                    { text: "Tamamen başkalarının onu nasıl göreceğine ve arzulayacağına odaklanır. Kendini bir nesneye dönüştürür.", score: 0 },
+                    { text: "Popüler estetik trendlere (filtreler, pozlar) uyarak onaylanma şansını artırmaya çalışır.", score: 3 },
+                    { text: "Kendi beğendiği bir görüntüdür ama paylaşmadan önce 'Başkası ne der?' diye uzun süre tereddüt eder.", score: 5 },
+                    { text: "O anki halini belgelemek ister, başkalarının yargısını ikinci planda tutmaya çalışır.", score: 8 },
+                    { text: "Fotoğrafı çeker ama paylaşmaktan vazgeçer; 'Bakış'ın nesnesi olmayı reddeder.", score: 10 }
+                ]
+            },
+            {
+                concept: "Yankı Odası / Algoritmik Bakış",
+                story: "Algoritma (modern çağın görünmez 'Tanrı'nın bakışı'), sürekli olarak onun mevcut inançlarını doğrulayan ve onu belirli bir veri kategorisine (en-soi) hapseden içerikler öneriyor.",
+                text: "Bu içeriklerle nasıl etkileşime girer?",
+                options: [
+                    { text: "Sadece kendi görüşünü onaylayanları beğenir, konfor alanında kalır.", score: 0 },
+                    { text: "Karşıt görüşlere sadece onlarla alay etmek veya sinirlenmek için tıklar.", score: 2 },
+                    { text: "Genelde kendi yankı odasında kalır ama bazen algoritmanın dışına çıkmaya çalışır.", score: 5 },
+                    { text: "Rahatsız olsa da, anlamak için bazen karşıt argümanları okumaya çalışır.", score: 8 },
+                    { text: "Algoritmanın onu tanımlama girişimini kırmak için bilinçli olarak farklı ve güvenilir kaynakları arar.", score: 10 }
+                ]
+            },
+            {
+                concept: "Dijital Hınç / Pazar Yeri Sinekleri",
+                story: "Platformda büyük bir 'linç' (pile-on) başladı. Tanınmış biri hata yaptı ve binlerce 'pazar yeri sineği' ona saldırıyor. Bu, Nietzsche'nin tarif ettiği, zayıfların kolektif bir güç hissi yaşadığı andır.",
+                text: "Homo Digitalis bu 'hayali intikam' ayinine katılır mı?",
+                options: [
+                    { text: "Evet, kalabalığın gücünü hissetmek için hemen aşağılayıcı bir yorum veya alıntılama yapar.", score: 0 },
+                    { text: "Kendi adına bir şey yazmaz ama yapılan saldırgan yorumları beğenerek (mikro doz intikam) tatmin olur.", score: 3 },
+                    { text: "Olayı izler, ahlaki bir üstünlük hisseder ama aktif olarak katılmaz.", score: 5 },
+                    { text: "Saldırının orantısız olduğunu düşünür ve rahatsızlık duyar.", score: 8 },
+                    { text: "Bu 'tarantula' davranışını reddeder. Pazar yerinin gürültüsünden uzaklaşır (Sessizlik).", score: 10 }
+                ]
+            },
+            {
+                concept: "Kötü Niyet / Kibir / Kurgu",
+                story: "Homo Digitalis tatilde. Hava kötü, morali bozuk. Ancak kısa süreliğine güneş açtığında gülümseyen harika bir fotoğraf çekmeyi başarıyor. Sartre'ın 'şizofrenik yarılma' dediği an: Ekranda mutlu, arkasında kaygılı.",
+                text: "Bu fotoğrafı nasıl paylaşır?",
+                options: [
+                    { text: "\"Hayatımın en güzel tatili! #Mükemmel\" notuyla paylaşır. (Tamamen Kötü Niyet)", score: 0 },
+                    { text: "Fotoğrafı yoğun filtrelerle mükemmelleştirir ve belirsiz, havalı bir söz yazar (Kibir).", score: 3 },
+                    { text: "Paylaşır ama not yazmaz, yorumu başkalarına bırakır (İki anlamlılık).", score: 5 },
+                    { text: "Paylaşır ama o günün zorluklarına dair küçük, dürüst bir imada bulunur.", score: 7 },
+                    { text: "Paylaşmaz. O anki 'oluşu' yaşamayı, bir imaja dönüşmeye tercih eder.", score: 10 }
+                ]
+            },
+            {
+                concept: "Birlikte-Olma vs. Yan Yana Yalnızlık",
+                story: "Yakın bir arkadaşı, sosyal medyada gerçekten üzgün olduğunu ima eden bir paylaşım yaptı. Sartre'a göre dijital ilişkiler genellikle 'yan yana duran yalnızlıklar'dır.",
+                text: "Homo Digitalis bu döngüyü kırar mı?",
+                options: [
+                    { text: "Otomatik olarak beğenir veya genel bir üzgün emoji (😢) bırakıp kaydırmaya devam eder.", score: 0 },
+                    { text: "Herkesin görebileceği bir yorum yazar: \"Canım iyi misin?\" (Performans)", score: 3 },
+                    { text: "Kısa bir DM (direkt mesaj) atıp özelden sorar.", score: 6 },
+                    { text: "Ona samimi bir ses kaydı veya uzun bir mesaj göndererek destek teklif eder.", score: 8 },
+                    { text: "Dijital akıştan tamamen çıkar, onu telefonla arar veya yüz yüze görüşmeye gider (Gerçek Mitsein).", score: 10 }
+                ]
+            },
+            {
+                concept: "Atılmışlık / İçselleştirilmiş Bakış",
+                story: "Önemli bir işe odaklanmış durumda. Telefonu, önemsiz bir bildirimle titriyor. Bu, Sartre'ın 'anahtar deliğindeki ayak sesi'nin dijital karşılığıdır; 'izleniyor olma' ihtimalinin çağrısı.",
+                text: "İlk tepkisi nedir?",
+                options: [
+                    { text: "Pavlovyan bir refleksle anında işi bırakıp ekrana bakar. Çağrıya teslim olur.", score: 0 },
+                    { text: "Kilit ekranına şöyle bir bakar, önemli değilse bile dikkati dağılır.", score: 3 },
+                    { text: "Merak eder, huzursuz olur ama bakmamak için direnir.", score: 5 },
+                    { text: "Mevcut işini bitirene kadar bakmayı bilinçli olarak erteler.", score: 8 },
+                    { text: "Bildirimleri zaten kapalıdır. Dışarıdan gelen bu çağrının odağını bozmasına izin vermez.", score: 10 }
+                ]
+            },
+            {
+                concept: "Kötü Niyet / 'Oyuncu' Olmak",
+                story: "Profil biyografisini (bio) güncelliyor. Sartre'ın 'garson' örneğindeki gibi, bir 'rolü oynamaya' hazırlanıyor. Kendini bir 'şey' (bir etiket, bir marka) olarak tanımlayacak.",
+                text: "Hangi motivasyonla yazar?",
+                options: [
+                    { text: "En çok onay alacak popüler etiketleri kullanır. Kendi özgürlüğünü bir 'marka'ya indirger.", score: 0 },
+                    { text: "Alanındaki popüler 'influencer'ların profillerini taklit eder (Simülasyon).", score: 3 },
+                    { text: "Kendi ilgileriyle, başkalarının etkileyici bulacağı şeyleri harmanlar.", score: 5 },
+                    { text: "Yaptıklarını dürüstçe yazar ama olduğundan biraz daha profesyonel göstermeye çalışır.", score: 7 },
+                    { text: "Trendlerden bağımsız, sade ve dürüst bir şekilde; bir role sığınmadan yazar.", score: 10 }
+                ]
+            },
+            {
+                concept: "Sürü İçgüdüsü / Das Man'ın Diktatörlüğü",
+                story: "Yeni bir viral akım (challenge/dans/meme) platformu ele geçirdi. Nietzsche'ye göre bu, sürünün senkronize hareketidir. 'Herkes' bunu yapıyor ve yapmayanlar 'öteki' olarak görülüyor.",
+                text: "Homo Digitalis bu ritüele katılır mı?",
+                options: [
+                    { text: "Evet, hemen katılır. Sürüden ayrı düşme korkusu (FOMO) ağır basar.", score: 0 },
+                    { text: "Sadece yakın çevresi yaparsa o da katılmayı düşünür.", score: 3 },
+                    { text: "Başkalarını izler, belki eğlenceli bulur ama kendisi yapma gereği duymaz.", score: 5 },
+                    { text: "Sadece akımın içeriğini gerçekten yaratıcı bulursa katılır, sürüyü takip etmek için değil.", score: 8 },
+                    { text: "Hayır. 'Herkesin yaptığı şeyi yapma' fikrini reddeder. Kendi 'üslubunu' korur.", score: 10 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let totalScore = 0;
+
+        function startQuiz() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.style.display = 'block';
+            quizContainer.classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('concept-display').innerText = q.concept;
+            document.getElementById('question-story').innerText = q.story;
+            document.getElementById('question-text').innerText = q.text;
+            document.getElementById('q-current').innerText = currentQuestion + 1;
+            document.getElementById('q-total').innerText = questions.length;
+
+            const optsDiv = document.getElementById('options-container');
+            optsDiv.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerText = opt.text;
+                btn.style.width = '100%';
+                btn.onclick = () => nextQuestion(opt.score);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function nextQuestion(score) {
+            totalScore += score;
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            resultContainer.classList.add('fade-in');
+
+            const maxScore = questions.length * 10;
+            const percentage = (totalScore / maxScore) * 100;
+
+            setTimeout(() => {
+                 document.getElementById('score-fill').style.width = percentage + '%';
+            }, 100);
+           
+            let header, desc, quote;
+
+            if (percentage < 35) { 
+                document.body.style.backgroundImage = "url('Das Man.png')";
+                header = "Vaka Durumu: Gönüllü Kölelik ve Nesneleşme";
+                desc = "Vaka analizi kritik. Bu kişi, dijital dünyada bir özne (pour-soi) olarak değil, algoritmaların ve sürünün tanımladığı bir veri nesnesi (en-soi) olarak var oluyor. <b>Sartre</b>'ın 'Bakış'ı altında ezilmiş, kendi özgürlüğünden kaçmak için 'Kötü Niyet'le sanal rollere sığınmış. <b>Nietzsche</b>'nin 'Son İnsan'ı gibi konfor ve onay arıyor, 'Pazar Yeri'nin gürültüsünde kendi sesini kaybetmiş. <b>Heidegger</b>'ci anlamda tam bir 'Düşkünlük' hali.";
+                quote = "\"Herkes ötekidir ve hiç kimse kendisi değildir.\" (Heidegger) | \"Cehennem başkalarıdır.\" (Sartre) | \"'Biz mutluluğu icat ettik' der son insanlar ve göz kırparlar.\" (Nietzsche)";
+            } else if (percentage < 75) {
+                document.body.style.backgroundImage = "url('Main Background.png')";
+                header = "Vaka Durumu: Arafta / Kötü Niyet ile Berraklık Arasında";
+                desc = "Vaka, dijital varoluşun tipik gerilimini yansıtıyor. Kişi bazen 'Bakış'ın tiranlığına boyun eğip 'rol yapıyor' (Kötü Niyet), bazen de sürünün dışına çıkma cesareti gösteriyor. <b>Nietzsche</b>'nin 'Kibir' (onaylanma arzusu) ile 'Gurur' (kendi değeri) arasında gidip geliyor. Teknolojinin onu bir nesneye dönüştürme baskısının farkında ama ona direnmekte zorlanıyor. 'Arafta' kalmış ortalama bir dijital vatandaş.";
+                quote = "\"Dasein, gündelikliğin içinde çoğunlukla 'Onlar'ın egemenliği altındadır.\" (Heidegger) | \"İnsan, olduğu şey olmayan ve olmadığı şey olan bir varlıktır.\" (Sartre)";
+            } else {
+                document.body.style.backgroundImage = "url('Otantiklik.png')";
+                header = "Vaka Durumu: Dijital Egemenlik ve Otantiklik";
+                desc = "Oldukça nadir ve dirençli bir vaka. Bu kişi, dijital panoptikonun 'Bakış'ına rağmen kendi özgürlüğünün (Aşkınlık) farkında. <b>Sartre</b>'ın 'Berraklık' dediği farkındalığa sahip; profilinin kendisi olmadığını biliyor. <b>Nietzsche</b>'nin 'Pazar Yeri Sinekleri'ne (trollere, linçlere) kayıtsız, sürünün onayını değil, kendi yaratımını (Güç İstenci) önemsiyor. Kalabalıklar içinde kendi olarak kalabilen, 'dijital bir üstinsan' adayı.";
+                quote = "\"Kendi olmak, kalabalıktan ayrılma cesaretini gerektirir.\" (Heidegger Yorumu) | \"Anahtar hala cebimizdedir: Bakışa rağmen, özgür olduğumuzu hatırlamak.\" (Sartre Raporu) | \"Yalnızlığın bittiği yerde pazar yeri başlar.\" (Nietzsche)";
+            }
+
+            document.getElementById('result-header').innerText = header;
+            document.getElementById('result-desc').innerHTML = desc;
+            document.getElementById('result-quote').innerText = quote;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            totalScore = 0;
+            document.getElementById('score-fill').style.width = '0%';
+            document.body.style.backgroundImage = "url('Main Background.png')";
+            
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'none';
+            resultContainer.classList.remove('fade-in');
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.classList.remove('fade-in');
+
+            document.getElementById('welcome-screen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
