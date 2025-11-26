@@ -29,7 +29,6 @@
             min-height: 100vh;
             margin: 0;
             line-height: 1.6;
-            /* Arka plan geçişini daha yumuşak yaptık (0.8s) */
             transition: background-image 0.8s ease-in-out;
         }
 
@@ -78,7 +77,7 @@
             text-align: center; 
             font-weight: bold; 
             box-shadow: 0 5px 15px rgba(0,212,255,0.3); 
-            width: auto; /* Genişliği içeriğe göre ayarla */
+            width: auto; 
             display: inline-block;
         }
         .btn-action:hover { background-color: #fff; transform: translateY(-3px); }
@@ -170,127 +169,125 @@
 
     <script>
         // --- JAVASCRIPT KISMI ---
-        // 10 SORULUK BİRLEŞTİRİLMİŞ HAVUZ (Heidegger + Sartre + Nietzsche)
-        // [Sorular ve işlevler tamamen aynı, sadece yerleşim düzenlendi]
         const questions = [
             {
                 concept: "Düşkünlük / Son İnsan / Kötü Niyet",
-                story: "Gece geç saat. Homo Digitalis, sadece 'bir mesajı kontrol etmek' için telefonunu eline aldı. Bir saat sonra kendini, hiç ilgisini çekmeyen konularda rastgele kısa videolar izlerken, Nietzsche'nin tabiriyle 'göz kırparken' buldu.",
-                text: "Bu 'kaydırma' (scrolling) seansı nasıl sona erer?",
+                story: "Gece yarısı, sadece bir bildirimini kontrol etmek için eline aldığın telefon, bir süre sonra seni hiç beklemediğin bir içerik girdabına sürüklüyor. Saatler akıp gitmiş, sen hala rastgele videolar arasında gezinirken kendini buluyorsun.",
+                text: "Bu sürükleyici akış genellikle nasıl son bulur?",
                 options: [
-                    { text: "Ancak fiziksel olarak yorgun düşüp telefonu elinden düşürdüğünde. (Tam Düşkünlük)", score: 0 },
-                    { text: "İçinden 'sadece bir video daha' diyerek süreyi sürekli uzatır, sonunda dış bir etkenle bırakır.", score: 3 },
-                    { text: "Bir süre sonra durumun anlamsızlığının farkına varır, varoluşsal bir sıkıntı (Bulantı) hisseder ve kapatır.", score: 5 },
-                    { text: "Belirli bir süre sonra iradesini kullanarak zorla da olsa bırakır.", score: 8 },
-                    { text: "Önceden belirlediği 15 dakikalık süre dolunca tereddütsüz bırakır. (Kararlılık)", score: 10 }
+                    { text: "Gözlerin kendiliğinden kapanıp yorgunluktan telefonu elinden düşürdüğünde.", score: 0 },
+                    { text: "İçinden bir ses 'birazdan bırakacağım' dese de, yeni bir dış etken (bir mesaj, bir uyarı) seni durdurana kadar devam ettiğinde.", score: 3 },
+                    { text: "Birden bir boşluk hissi, 'Ben ne yapıyorum burada?' düşüncesi seni rahatsız ettiğinde ve kapatmaya karar verdiğinde.", score: 5 },
+                    { text: "Zihninde belirlediğin bir eşiği geçtikten sonra, 'Yeter artık!' diyerek kendini zorla da olsa durdurduğunda.", score: 8 },
+                    { text: "En baştan kendine koyduğun zaman sınırı dolduğunda, tereddütsüz bir şekilde telefonu bırakıp uykuya geçtiğinde.", score: 10 }
                 ]
             },
             {
                 concept: "Gerede / Sürü İçgüdüsü",
-                story: "Sosyal medyada, doğruluğu kanıtlanmamış ama çok popüler ve kutuplaştırıcı bir iddia hızla yayılıyor. Herkes bu konu hakkında öfkeli yorumlar yapıyor.",
-                text: "Homo Digitalis bu durumda ne yapar?",
+                story: "Sosyal medyada, doğruluğu kanıtlanmamış ancak herkesin konuştuğu, hızla yayılan ve duygu yüklü bir iddia görüp duruyorsun. Çevrendeki herkes bu konuda hararetli yorumlar yapıyor.",
+                text: "Bu tür bir iddiayla karşılaştığında ilk tepkin ne olur?",
                 options: [
-                    { text: "Sürüye dahil olmak ve onaylanmak için hemen öfkeli bir yorumla katılır veya RT eder.", score: 0 },
-                    { text: "Kendi önyargılarına uygunsa, doğruluğunu sorgulamadan beğenir (Homofili).", score: 3 },
-                    { text: "Yorumları okur, etkilenir ama pazar yerinin sineklerine karışmaya çekinir.", score: 5 },
-                    { text: "Hızlıca bir doğrulama yapmaya çalışır; bulamazsa şüpheyle yaklaşır ve paylaşmaz.", score: 8 },
-                    { text: "Kaynağı belirsiz 'söz' (Gerede) olduğu için tamamen sessiz kalır ve yayılmasına katkıda bulunmaz.", score: 10 }
+                    { text: "Topluluğun tepkisine katılma arzusuyla, hemen bir yorumla veya paylaşımla bu akıma dahil olursun.", score: 0 },
+                    { text: "Kendi görüşlerine yakınsa, yeterince incelemeden 'Beğen' butonuna basar veya sessizce onaylarsın.", score: 3 },
+                    { text: "Yorumları ve tepkileri okursun, içten içe bir taraf tutsan da açıkça pozisyon almaktan çekinirsin.", score: 5 },
+                    { text: "İddianın kaynağını ve doğruluğunu hızla araştırmaya çalışırsın; şüphe duyarsan paylaşım yapmazsın.", score: 8 },
+                    { text: "Bilginin kaynağı belirsiz veya manipülatif göründüğü için tamamen uzak durur, yayılmasına kesinlikle katkıda bulunmazsın.", score: 10 }
                 ]
             },
             {
                 concept: "Dijital Bakış / Gönüllü Nesneleşme",
-                story: "Homo Digitalis aynada kendine bakıyor. Aklına bu görüntüyü sosyal medyada paylaşmak geliyor. O andan itibaren, Sartre'ın dediği gibi, artık kendine kendi gözleriyle değil, potansiyel izleyicinin (Başkası'nın) gözüyle bakmaya başlıyor.",
-                text: "Fotoğrafı çekerken ana motivasyonu nedir?",
+                story: "Aynada kendine bakarken, bu anı sosyal medyada paylaşma fikri aklına geliyor. Bir anda, kendini kendi gözlerinle değil, gönderiyi görecek potansiyel izleyicilerin (Başkaları'nın) gözüyle değerlendirmeye başlıyorsun.",
+                text: "Bu fotoğrafı çekerken seni en çok etkileyen motivasyon nedir?",
                 options: [
-                    { text: "Tamamen başkalarının onu nasıl göreceğine ve arzulayacağına odaklanır. Kendini bir nesneye dönüştürür.", score: 0 },
-                    { text: "Popüler estetik trendlere (filtreler, pozlar) uyarak onaylanma şansını artırmaya çalışır.", score: 3 },
-                    { text: "Kendi beğendiği bir görüntüdür ama paylaşmadan önce 'Başkası ne der?' diye uzun süre tereddüt eder.", score: 5 },
-                    { text: "O anki halini belgelemek ister, başkalarının yargısını ikinci planda tutmaya çalışır.", score: 8 },
-                    { text: "Fotoğrafı çeker ama paylaşmaktan vazgeçer; 'Bakış'ın nesnesi olmayı reddeder.", score: 10 }
+                    { text: "Fotoğrafın, başkaları tarafından nasıl algılanacağı, beğenileceği ve 'arzulanır' bulunacağı tek önceliğin olur.", score: 0 },
+                    { text: "Popüler estetik anlayışa uygun filtreler ve pozlarla, başkalarından daha çok onay almak için çabalarsın.", score: 3 },
+                    { text: "Kendi beğendiğin bir görüntüdür ama paylaşmadan önce 'Başkası ne düşünür?' diye uzunca bir süre tereddüt edersin.", score: 5 },
+                    { text: "O anki halini doğal bir şekilde kaydetmek istersin, başkalarının yargısı aklına gelse de çok önemsemezsin.", score: 8 },
+                    { text: "Fotoğrafı çekersin ama paylaşmaktan vazgeçersin; kendini bir 'bakışın' nesnesi olmaya bırakmak istemezsin.", score: 10 }
                 ]
             },
             {
                 concept: "Yankı Odası / Algoritmik Bakış",
-                story: "Algoritma (modern çağın görünmez 'Tanrı'nın bakışı'), sürekli olarak onun mevcut inançlarını doğrulayan ve onu belirli bir veri kategorisine (en-soi) hapseden içerikler öneriyor.",
-                text: "Bu içeriklerle nasıl etkileşime girer?",
+                story: "Dijital platformlarda kullandığın algoritmalar, senin mevcut inançlarını sürekli doğrulayan ve seni belirli bir 'veri kategorisine' hapseden içeriklerle kuşatıyor. Aynı görüşteki insanlar, aynı şeyleri söylüyor gibi.",
+                text: "Bu tür 'yankı odası' içerikleriyle nasıl etkileşim kurarsın?",
                 options: [
-                    { text: "Sadece kendi görüşünü onaylayanları beğenir, konfor alanında kalır.", score: 0 },
-                    { text: "Karşıt görüşlere sadece onlarla alay etmek veya sinirlenmek için tıklar.", score: 2 },
-                    { text: "Genelde kendi yankı odasında kalır ama bazen algoritmanın dışına çıkmaya çalışır.", score: 5 },
-                    { text: "Rahatsız olsa da, anlamak için bazen karşıt argümanları okumaya çalışır.", score: 8 },
-                    { text: "Algoritmanın onu tanımlama girişimini kırmak için bilinçli olarak farklı ve güvenilir kaynakları arar.", score: 10 }
+                    { text: "Sadece kendi görüşlerini onaylayan içerikleri beğenir, tanıdık ve konforlu alanından çıkmazsın.", score: 0 },
+                    { text: "Bazen karşıt görüşlere sırf eleştirmek, alay etmek veya sinirlenmek için tıklarsın.", score: 2 },
+                    { text: "Genelde kendi yankı odanda kalırsın ama arada bir, farklı bir bakış açısı görmek için algoritmanın dışına çıkmayı denersin.", score: 5 },
+                    { text: "Rahatsız edici olsa da, karşıt argümanları anlamaya çalışmak için güvenilir kaynaklardan okumaya özen gösterirsin.", score: 8 },
+                    { text: "Algoritmanın seni tanımlama ve sınırlama girişimini kırar, bilinçli olarak çok çeşitli ve güvenilir kaynaklardan bilgi edinirsin.", score: 10 }
                 ]
             },
             {
                 concept: "Dijital Hınç / Pazar Yeri Sinekleri",
-                story: "Platformda büyük bir 'linç' (pile-on) başladı. Tanınmış biri hata yaptı ve binlerce 'pazar yeri sineği' ona saldırıyor. Bu, Nietzsche'nin tarif ettiği, zayıfların kolektif bir güç hissi yaşadığı andır.",
-                text: "Homo Digitalis bu 'hayali intikam' ayinine katılır mı?",
+                story: "Platformda tanınmış birinin yaptığı bir hata yüzünden büyük bir 'linç' veya kolektif bir 'saldırı' başladı. Binlerce kişi eleştiri oklarını hedef kişiye yöneltiyor; adeta Nietzsche'nin 'pazar yeri sinekleri' gibi bir araya gelmişler.",
+                text: "Bu tür bir dijital kalabalık hareketine katılır mısın?",
                 options: [
-                    { text: "Evet, kalabalığın gücünü hissetmek için hemen aşağılayıcı bir yorum veya alıntılama yapar.", score: 0 },
-                    { text: "Kendi adına bir şey yazmaz ama yapılan saldırgan yorumları beğenerek (mikro doz intikam) tatmin olur.", score: 3 },
-                    { text: "Olayı izler, ahlaki bir üstünlük hisseder ama aktif olarak katılmaz.", score: 5 },
-                    { text: "Saldırının orantısız olduğunu düşünür ve rahatsızlık duyar.", score: 8 },
-                    { text: "Bu 'tarantula' davranışını reddeder. Pazar yerinin gürültüsünden uzaklaşır (Sessizlik).", score: 10 }
+                    { text: "Evet, kalabalığın gücünü ve getirdiği tatmini hissetmek için hemen aşağılayıcı bir yorumla veya alıntılama ile katılırsın.", score: 0 },
+                    { text: "Kendi adına bir şey yazmazsın ama yapılan agresif yorumları beğenerek veya gizlice onaylayarak tatmin olursun.", score: 3 },
+                    { text: "Olayı uzaktan izlersin, içten içe bir üstünlük hissi duyarsın ama aktif olarak kimseye saldırmazsın.", score: 5 },
+                    { text: "Yapılan saldırının orantısız olduğunu düşünür ve bu durumdan rahatsızlık duyarsın.", score: 8 },
+                    { text: "Bu tür 'tarantula' davranışlarını reddeder, pazar yerinin gürültüsünden ve olumsuz enerjisinden uzak durursun.", score: 10 }
                 ]
             },
             {
                 concept: "Kötü Niyet / Kibir / Kurgu",
-                story: "Homo Digitalis tatilde. Hava kötü, morali bozuk. Ancak kısa süreliğine güneş açtığında gülümseyen harika bir fotoğraf çekmeyi başarıyor. Sartre'ın 'şizofrenik yarılma' dediği an: Ekranda mutlu, arkasında kaygılı.",
-                text: "Bu fotoğrafı nasıl paylaşır?",
+                story: "Tatildesin, ancak hava kötü ve moralin pek yerinde değil. Kısa süreliğine güneş açtığında, hızla gülümseyen ve kusursuz görünen bir fotoğraf çekmeyi başarıyorsun. İçinde bir kaygı varken, ekranda adeta 'çok mutlu' bir rol oynuyorsun.",
+                text: "Bu fotoğrafı sosyal medyada nasıl paylaşırsın?",
                 options: [
-                    { text: "\"Hayatımın en güzel tatili! #Mükemmel\" notuyla paylaşır. (Tamamen Kötü Niyet)", score: 0 },
-                    { text: "Fotoğrafı yoğun filtrelerle mükemmelleştirir ve belirsiz, havalı bir söz yazar (Kibir).", score: 3 },
-                    { text: "Paylaşır ama not yazmaz, yorumu başkalarına bırakır (İki anlamlılık).", score: 5 },
-                    { text: "Paylaşır ama o günün zorluklarına dair küçük, dürüst bir imada bulunur.", score: 7 },
-                    { text: "Paylaşmaz. O anki 'oluşu' yaşamayı, bir imaja dönüşmeye tercih eder.", score: 10 }
+                    { text: "Gerçek duygularını tamamen gizleyip, 'Hayatımın en güzel tatili! #Mükemmel' gibi bir notla paylaşırsın.", score: 0 },
+                    { text: "Fotoğrafı yoğun filtrelerle mükemmelleştirir, havalı ama belirsiz bir alıntı veya söz yazarsın.", score: 3 },
+                    { text: "Sadece fotoğrafı paylaşırsın, üzerine hiçbir not yazmaz, yorumu tamamen başkalarına bırakırsın.", score: 5 },
+                    { text: "Fotoğrafı paylaşırken, o günün zorluklarına veya hava durumuna dair küçük, dürüst bir imada bulunursun.", score: 7 },
+                    { text: "Bu fotoğrafı paylaşmazsın. O anki 'oluşunu' yaşamayı, kurgusal bir imaja dönüşmeye tercih edersin.", score: 10 }
                 ]
             },
             {
                 concept: "Birlikte-Olma vs. Yan Yana Yalnızlık",
-                story: "Yakın bir arkadaşı, sosyal medyada gerçekten üzgün olduğunu ima eden bir paylaşım yaptı. Sartre'a göre dijital ilişkiler genellikle 'yan yana duran yalnızlıklar'dır.",
-                text: "Homo Digitalis bu döngüyü kırar mı?",
+                story: "Yakın bir arkadaşın sosyal medyada, gerçekten üzgün veya sorunlu olduğunu ima eden bir paylaşım yaptı. Sartre'a göre dijital ilişkiler genellikle 'yan yana duran yalnızlıklar'dır.",
+                text: "Bu durumda arkadaşına nasıl bir destek sunarsın?",
                 options: [
-                    { text: "Otomatik olarak beğenir veya genel bir üzgün emoji (😢) bırakıp kaydırmaya devam eder.", score: 0 },
-                    { text: "Herkesin görebileceği bir yorum yazar: \"Canım iyi misin?\" (Performans)", score: 3 },
-                    { text: "Kısa bir DM (direkt mesaj) atıp özelden sorar.", score: 6 },
-                    { text: "Ona samimi bir ses kaydı veya uzun bir mesaj göndererek destek teklif eder.", score: 8 },
-                    { text: "Dijital akıştan tamamen çıkar, onu telefonla arar veya yüz yüze görüşmeye gider (Gerçek Mitsein).", score: 10 }
+                    { text: "Paylaşımı otomatik olarak beğenir veya genel bir üzgün emoji (😢) bırakıp akışta gezinmeye devam edersin.", score: 0 },
+                    { text: "Herkesin görebileceği bir yorum olarak 'Canım, iyi misin?' diye sorar, aslında daha çok göründüğünle ilgilenirsin.", score: 3 },
+                    { text: "Kısa bir direkt mesaj (DM) atarak özelden nasıl olduğunu sorar ve hızlı bir destek mesajı gönderirsin.", score: 6 },
+                    { text: "Ona samimi, uzun bir mesaj veya ses kaydı göndererek gerçek bir destek ve dinlemeye hazır olduğunu belli edersin.", score: 8 },
+                    { text: "Dijital platformdan tamamen çıkar, onu telefonla arar veya doğrudan yüz yüze görüşmeye giderek gerçek bir 'birlikte-oluşu' tercih edersin.", score: 10 }
                 ]
             },
             {
                 concept: "Atılmışlık / İçselleştirilmiş Bakış",
-                story: "Önemli bir işe odaklanmış durumda. Telefonu, önemsiz bir bildirimle titriyor. Bu, Sartre'ın 'anahtar deliğindeki ayak sesi'nin dijital karşılığıdır; 'izleniyor olma' ihtimalinin çağrısı.",
-                text: "İlk tepkisi nedir?",
+                story: "Önemli ve dikkat gerektiren bir işe odaklanmış durumdasın. Telefonun, önemsiz gibi görünen bir bildirimle titriyor. Bu, Sartre'ın 'anahtar deliğindeki ayak sesi'nin dijital karşılığıdır; 'izleniyor olma' ihtimalinin veya dış çağrının seslenişi.",
+                text: "Bu bildirime karşı ilk tepkin ne olur?",
                 options: [
-                    { text: "Pavlovyan bir refleksle anında işi bırakıp ekrana bakar. Çağrıya teslim olur.", score: 0 },
-                    { text: "Kilit ekranına şöyle bir bakar, önemli değilse bile dikkati dağılır.", score: 3 },
-                    { text: "Merak eder, huzursuz olur ama bakmamak için direnir.", score: 5 },
-                    { text: "Mevcut işini bitirene kadar bakmayı bilinçli olarak erteler.", score: 8 },
-                    { text: "Bildirimleri zaten kapalıdır. Dışarıdan gelen bu çağrının odağını bozmasına izin vermez.", score: 10 }
+                    { text: "Koşullu refleksle anında işi bırakıp ekrana bakar, bildirim çağrısına istemsizce teslim olursun.", score: 0 },
+                    { text: "Telefonun kilit ekranına şöyle bir göz atarsın; önemli olmasa da dikkatin dağılır ve işine geri dönmekte zorlanırsın.", score: 3 },
+                    { text: "Merak edersin, içten içe bir huzursuzluk hissedersin ama bakmamak için kendini zorla da olsa tutarsın.", score: 5 },
+                    { text: "Mevcut işini bitirene kadar bildirimlere bakmayı bilinçli olarak ertelersin.", score: 8 },
+                    { text: "Telefonunun bildirimleri zaten kapalıdır. Dışarıdan gelen bu tür çağrıların odağını bozmasına asla izin vermezsin.", score: 10 }
                 ]
             },
             {
                 concept: "Kötü Niyet / 'Oyuncu' Olmak",
-                story: "Profil biyografisini (bio) güncelliyor. Sartre'ın 'garson' örneğindeki gibi, bir 'rolü oynamaya' hazırlanıyor. Kendini bir 'şey' (bir etiket, bir marka) olarak tanımlayacak.",
-                text: "Hangi motivasyonla yazar?",
+                story: "Sosyal medya profilinin biyografi (bio) kısmını güncelliyorsun. Sartre'ın 'garson' örneğindeki gibi, belirli bir 'rolü oynamaya' veya kendini sabit bir 'şey' (bir etiket, bir marka) olarak tanımlamaya hazırlanıyorsun.",
+                text: "Profil biyografini hangi motivasyonla yazarsın?",
                 options: [
-                    { text: "En çok onay alacak popüler etiketleri kullanır. Kendi özgürlüğünü bir 'marka'ya indirger.", score: 0 },
-                    { text: "Alanındaki popüler 'influencer'ların profillerini taklit eder (Simülasyon).", score: 3 },
-                    { text: "Kendi ilgileriyle, başkalarının etkileyici bulacağı şeyleri harmanlar.", score: 5 },
-                    { text: "Yaptıklarını dürüstçe yazar ama olduğundan biraz daha profesyonel göstermeye çalışır.", score: 7 },
-                    { text: "Trendlerden bağımsız, sade ve dürüst bir şekilde; bir role sığınmadan yazar.", score: 10 }
+                    { text: "En çok ilgi çekecek ve onay alacak popüler etiketleri veya sıfatları kullanır, kendi özgürlüğünü bir 'marka'ya indirgersin.", score: 0 },
+                    { text: "Alanındaki popüler kişilerin veya 'influencer'ların profil biyografilerini taklit ederek kendine bir imaj inşa edersin.", score: 3 },
+                    { text: "Kendi ilgi alanlarınla, başkalarının etkileyici bulacağı şeyleri harmanlayarak 'ortalama çekici' bir profil oluşturursun.", score: 5 },
+                    { text: "Yaptıklarını dürüstçe yazar ama kendini olduğundan biraz daha profesyonel veya 'havalı' göstermeye çalışırsın.", score: 7 },
+                    { text: "Popüler trendlerden bağımsız, sade, dürüst ve bir role sığınmadan, kendi özgün tanımını yazarsın.", score: 10 }
                 ]
             },
             {
                 concept: "Sürü İçgüdüsü / Das Man'ın Diktatörlüğü",
-                story: "Yeni bir viral akım (challenge/dans/meme) platformu ele geçirdi. Nietzsche'ye göre bu, sürünün senkronize hareketidir. 'Herkes' bunu yapıyor ve yapmayanlar 'öteki' olarak görülüyor.",
-                text: "Homo Digitalis bu ritüele katılır mı?",
+                story: "Yeni bir viral akım (bir challenge, bir dans, bir meme) dijital platformları ele geçirmiş durumda. Nietzsche'ye göre bu, 'sürü'nün senkronize hareketidir; 'Herkes' bunu yapıyor ve yapmayanlar 'öteki' olarak görülüyor.",
+                text: "Bu tür bir dijital ritüele katılır mısın?",
                 options: [
-                    { text: "Evet, hemen katılır. Sürüden ayrı düşme korkusu (FOMO) ağır basar.", score: 0 },
-                    { text: "Sadece yakın çevresi yaparsa o da katılmayı düşünür.", score: 3 },
-                    { text: "Başkalarını izler, belki eğlenceli bulur ama kendisi yapma gereği duymaz.", score: 5 },
-                    { text: "Sadece akımın içeriğini gerçekten yaratıcı bulursa katılır, sürüyü takip etmek için değil.", score: 8 },
-                    { text: "Hayır. 'Herkesin yaptığı şeyi yapma' fikrini reddeder. Kendi 'üslubunu' korur.", score: 10 }
+                    { text: "Evet, hemen katılırım. Sürüden ayrı düşme korkusu (FOMO) veya genel kabul görme isteği ağır basar.", score: 0 },
+                    { text: "Sadece yakın çevremdeki herkes yapmaya başlarsa, ben de katılmayı düşünebilirim.", score: 3 },
+                    { text: "Başkalarını izlerim, belki eğlenceli bulurum ama kendim bir şeyler üretip katılma gereği duymam.", score: 5 },
+                    { text: "Sadece akımın içeriğini gerçekten yaratıcı, anlamlı veya bana uygun bulursam katılırım, sürüyü takip etmek için değil.", score: 8 },
+                    { text: "Hayır. 'Herkesin yaptığı şeyi yapma' fikrini reddederim. Kendi 'üslubumu' korumayı ve özgün olmayı tercih ederim.", score: 10 }
                 ]
             }
         ];
@@ -353,21 +350,22 @@
            
             let header, desc, quote;
 
+            // --- SONUÇ METİNLERİ: ÜÇ FİLOZOFUN SENTEZİ (DİDAKTİK OLMAYAN DİL) ---
             if (percentage < 35) { 
                 document.body.style.backgroundImage = "url('Das Man.png')";
-                header = "Vaka Durumu: Gönüllü Kölelik ve Nesneleşme";
-                desc = "Vaka analizi kritik. Bu kişi, dijital dünyada bir özne (pour-soi) olarak değil, algoritmaların ve sürünün tanımladığı bir veri nesnesi (en-soi) olarak var oluyor. <b>Sartre</b>'ın 'Bakış'ı altında ezilmiş, kendi özgürlüğünden kaçmak için 'Kötü Niyet'le sanal rollere sığınmış. <b>Nietzsche</b>'nin 'Son İnsan'ı gibi konfor ve onay arıyor, 'Pazar Yeri'nin gürültüsünde kendi sesini kaybetmiş. <b>Heidegger</b>'ci anlamda tam bir 'Düşkünlük' hali.";
+                header = "Vaka Durumu: Dijital Kalabalığın İçinde Kayboluş";
+                desc = "Bu vaka analizi, dijital dünyada bireyin 'kendisi olma' yolculuğunda önemli engellerle karşılaştığını gösteriyor. <b>Sartre</b>'ın 'Bakış'ı altında, kendi özgürlüğünden kaçarak, başkalarının beklentilerine göre şekillenme eğilimi güçlü. Bu durum, 'Kötü Niyet'le oynanan bir rolü andırıyor. <b>Nietzsche</b>'nin 'Son İnsan'ının konfor arayışı ve 'Sürü Ahlakı'na teslimiyeti gözlemleniyor. <b>Heidegger</b>'ci anlamda ise 'Düşkünlük' hali, gündelikliğin akıntısına kapılmış bir varoluşa işaret ediyor.";
                 quote = "\"Herkes ötekidir ve hiç kimse kendisi değildir.\" (Heidegger) | \"Cehennem başkalarıdır.\" (Sartre) | \"'Biz mutluluğu icat ettik' der son insanlar ve göz kırparlar.\" (Nietzsche)";
             } else if (percentage < 75) {
-                document.body.style.backgroundImage = "url('Main Background.png')";
-                header = "Vaka Durumu: Arafta / Kötü Niyet ile Berraklık Arasında";
-                desc = "Vaka, dijital varoluşun tipik gerilimini yansıtıyor. Kişi bazen 'Bakış'ın tiranlığına boyun eğip 'rol yapıyor' (Kötü Niyet), bazen de sürünün dışına çıkma cesareti gösteriyor. <b>Nietzsche</b>'nin 'Kibir' (onaylanma arzusu) ile 'Gurur' (kendi değeri) arasında gidip geliyor. Teknolojinin onu bir nesneye dönüştürme baskısının farkında ama ona direnmekte zorlanıyor. 'Arafta' kalmış ortalama bir dijital vatandaş.";
+                document.body.style.backgroundImage = "url('Main Background.png')"; // Ortadaki durum için Main Background
+                header = "Vaka Durumu: Arafta / Dijital Varoluşun İkilemi";
+                desc = "Bu vaka, dijital varoluşun getirdiği tipik bir ikilemi yansıtıyor. Birey, zaman zaman 'Bakış'ın etkisine kapılıp sosyal medya rolleri oynama (Kötü Niyet) eğilimi gösterse de, içinde bulunduğu durumun anlamsızlığına dair bir huzursuzluk hissediyor. <b>Nietzsche</b>'nin 'Kibir' (dış onaya bağlılık) ile kendi 'İradesi' (içsel değer) arasında bir salınım söz konusu. Algoritmanın yönlendirmelerinin farkında ama ona tam anlamıyla direnmekte zorlanıyor. Dijital dünyada 'Otantiklik' arayışının eşiğinde, fakat henüz tam bir kararlılık sergileyemeyen bir durum.";
                 quote = "\"Dasein, gündelikliğin içinde çoğunlukla 'Onlar'ın egemenliği altındadır.\" (Heidegger) | \"İnsan, olduğu şey olmayan ve olmadığı şey olan bir varlıktır.\" (Sartre)";
             } else {
                 document.body.style.backgroundImage = "url('Otantiklik.png')";
                 header = "Vaka Durumu: Dijital Egemenlik ve Otantiklik";
-                desc = "Oldukça nadir ve dirençli bir vaka. Bu kişi, dijital panoptikonun 'Bakış'ına rağmen kendi özgürlüğünün (Aşkınlık) farkında. <b>Sartre</b>'ın 'Berraklık' dediği farkındalığa sahip; profilinin kendisi olmadığını biliyor. <b>Nietzsche</b>'nin 'Pazar Yeri Sinekleri'ne (trollere, linçlere) kayıtsız, sürünün onayını değil, kendi yaratımını (Güç İstenci) önemsiyor. Kalabalıklar içinde kendi olarak kalabilen, 'dijital bir üstinsan' adayı.";
-                quote = "\"Kendi olmak, kalabalıktan ayrılma cesaretini gerektirir.\" (Heidegger Yorumu) | \"Anahtar hala cebimizdedir: Bakışa rağmen, özgür olduğumuzu hatırlamak.\" (Sartre Raporu) | \"Yalnızlığın bittiği yerde pazar yeri başlar.\" (Nietzsche)";
+                desc = "Bu vaka, dijital çağda nadir görülen ve güçlü bir varoluşu temsil ediyor. Birey, dijital panoptikonun 'Bakış'ına rağmen kendi özgürlüğünün ve 'Aşkınlık' potansiyelinin farkında. <b>Sartre</b>'ın 'Berraklık' dediği netliğe sahip; sanal profilinin kendi 'oluşu' olmadığını biliyor. <b>Nietzsche</b>'nin 'Pazar Yeri Sinekleri'nin (trollük, linç) gürültüsüne aldırış etmiyor; sürünün onayını değil, kendi 'Güç İstenci'ni ve yaratımını önemsiyor. Kalabalıklar içinde kendi olarak kalabilen, dijital dünyanın zorluklarına meydan okuyan, 'dijital bir üstinsan' adayı bir duruş sergiliyor.";
+                quote = "\"Kendi olmak, kalabalıktan ayrılma cesaretini gerektirir.\" (Heidegger'den esinlenerek) | \"Anahtar hala cebimizdedir: Bakışa rağmen, özgür olduğumuzu hatırlamak.\" (Sartre'dan yorumla) | \"Yalnızlığın bittiği yerde pazar yeri başlar.\" (Nietzsche)";
             }
 
             document.getElementById('result-header').innerText = header;
@@ -393,3 +391,4 @@
     </script>
 </body>
 </html>
+```http://googleusercontent.com/image_generation_content/8
